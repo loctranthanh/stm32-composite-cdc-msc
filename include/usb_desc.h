@@ -23,8 +23,26 @@
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported define -----------------------------------------------------------*/
+#define USB_DEVICE_DESCRIPTOR_TYPE              0x01
+#define USB_CONFIGURATION_DESCRIPTOR_TYPE       0x02
+#define USB_STRING_DESCRIPTOR_TYPE              0x03
+#define USB_INTERFACE_DESCRIPTOR_TYPE           0x04
+#define USB_ENDPOINT_DESCRIPTOR_TYPE            0x05
+
+#define HID_DESCRIPTOR_TYPE                     0x21
+#define CUSTOMHID_SIZ_HID_DESC                  0x09
+#define CUSTOMHID_OFF_HID_DESC                  0x12
+
+#define Composite_SIZ_DEVICE_DESC               18
+#define Composite_SIZ_CONFIG_DESC               64
+#define CUSTOMHID_SIZ_REPORT_DESC               143
+#define Composite_SIZ_STRING_LANGID             4
+#define Composite_SIZ_STRING_VENDOR             38
+#define Composite_SIZ_STRING_PRODUCT            48
+#define Composite_SIZ_STRING_SERIAL             26
+
 #define MASS_SIZ_DEVICE_DESC              18
-#define MASS_SIZ_CONFIG_DESC              32
+#define MASS_SIZ_CONFIG_DESC              98
 
 #define MASS_SIZ_STRING_LANGID            4
 #define MASS_SIZ_STRING_VENDOR            34
