@@ -31,6 +31,14 @@
 /* Private variables ---------------------------------------------------------*/
 ErrorStatus HSEStartUpStatus;
 
+extern volatile uint32_t packet_sent;
+extern volatile uint8_t Send_Buffer[VIRTUAL_COM_PORT_DATA_SIZE] ;
+extern volatile uint32_t packet_receive;
+extern volatile uint8_t Receive_length;
+
+uint8_t Receive_Buffer[64];
+uint32_t Send_length;
+
 /* Extern variables ----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 static void IntToUnicode (uint32_t value , uint8_t *pbuf , uint8_t len);
@@ -232,5 +240,47 @@ void USB_Disconnect_Config(void)
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
   GPIO_Init(USB_DISCONNECT, &GPIO_InitStructure);
 }
+
+/*******************************************************************************
+* Function Name  : Send DATA .
+* Description    : send the data received from the STM32 to the PC through USB
+* Input          : None.
+* Output         : None.
+* Return         : None.
+*******************************************************************************/
+uint32_t CDC_Send_DATA (uint8_t *ptrBuffer, uint8_t Send_length)
+{
+  /*if max buffer is Not reached*/
+  if(Send_length < VIRTUAL_COM_PORT_DATA_SIZE)
+  {
+    /*Sent flag*/
+    packet_sent = 0;
+    /* send  packet to PMA*/
+    UserToPMABufferCopy((unsigned char*)ptrBuffer, ENDP3_TXADDR, Send_length);
+    SetEPTxCount(ENDP3, Send_length);
+    SetEPTxValid(ENDP3);
+  }
+  else
+  {
+    return 0;
+  }
+  return 1;
+}
+
+/*******************************************************************************
+* Function Name  : Receive DATA .
+* Description    : receive the data from the PC to STM32 and send it through USB
+* Input          : None.
+* Output         : None.
+* Return         : None.
+*******************************************************************************/
+uint32_t CDC_Receive_DATA(void)
+{
+  /*Receive flag*/
+  packet_receive = 0;
+  SetEPRxValid(ENDP3);
+  return 1 ;
+}
+
 
 /******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/

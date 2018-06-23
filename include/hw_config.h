@@ -41,6 +41,8 @@ void USB_Cable_Config (FunctionalState NewState);
 void Get_SerialNum(void);
 void MAL_Config(void);
 void USB_Disconnect_Config(void);
+uint32_t CDC_Send_DATA (uint8_t *ptrBuffer, uint8_t Send_length);
+uint32_t CDC_Receive_DATA(void);
 /* External variables --------------------------------------------------------*/
 
 #endif  /*__HW_CONFIG_H*/

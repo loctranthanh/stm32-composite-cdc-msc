@@ -28,12 +28,21 @@
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 u32 Max_Lun = 0;
+uint8_t Request = 0;
 
 
 DEVICE Device_Table =
   {
     EP_NUM,
     1
+  };
+
+LINE_CODING linecoding =
+  {
+    9600, /* baud rate*/
+    0x00,   /* stop bits-1*/
+    0x00,   /* parity - none*/
+    0x08    /* no. of bits 8*/
   };
 
 DEVICE_PROP Device_Property =
@@ -155,6 +164,25 @@ void MASS_Reset()
   SetEPRxCount(ENDP2, Device_Property.MaxPacketSize);
   SetEPRxStatus(ENDP2, EP_RX_VALID);
   SetEPTxStatus(ENDP2, EP_TX_DIS);
+
+  /* Initialize Endpoint 1 */
+    SetEPType(ENDP3, EP_BULK);
+    SetEPTxAddr(ENDP3, ENDP3_TXADDR);
+    SetEPTxStatus(ENDP3, EP_TX_NAK);
+    SetEPRxStatus(ENDP3, EP_RX_DIS);
+
+    /* Initialize Endpoint 2 */
+    SetEPType(ENDP2, EP_INTERRUPT);
+    SetEPTxAddr(ENDP2, ENDP2_TXADDR);
+    SetEPRxStatus(ENDP2, EP_RX_DIS);
+    SetEPTxStatus(ENDP2, EP_TX_NAK);
+
+    /* Initialize Endpoint 3 */
+    SetEPType(ENDP3, EP_BULK);
+    SetEPRxAddr(ENDP3, ENDP3_RXADDR);
+    SetEPRxCount(ENDP3, VIRTUAL_COM_PORT_DATA_SIZE);
+    SetEPRxStatus(ENDP3, EP_RX_VALID);
+    SetEPTxStatus(ENDP3, EP_TX_DIS);
 
 
   SetEPRxCount(ENDP0, Device_Property.MaxPacketSize);
@@ -391,5 +419,3 @@ uint8_t *Get_Max_Lun(uint16_t Length)
     return((uint8_t*)(&Max_Lun));
   }
 }
-
-/******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/

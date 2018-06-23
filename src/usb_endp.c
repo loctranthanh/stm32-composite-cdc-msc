@@ -25,6 +25,11 @@
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
+uint32_t Receive_length;
+extern volatile uint32_t packet_sent;
+extern volatile uint32_t packet_receive;
+extern volatile uint8_t Receive_Buffer[64];
+
 /*******************************************************************************
 * Function Name  : EP1_IN_Callback
 * Description    : EP1 IN Callback Routine
@@ -48,6 +53,24 @@ void EP2_OUT_Callback(void)
 {
   Mass_Storage_Out();
 }
+
+void EP3_OUT_Callback(void)
+{
+	packet_receive = 1;
+	Receive_length = GetEPRxCount(ENDP3);
+	PMAToUserBufferCopy((unsigned char*)Receive_Buffer, ENDP3_RXADDR, Receive_length);
+}
+
+void EP2_IN_Callback(void)
+{
+}
+
+void EP3_IN_Callback(void)
+{
+	packet_sent = 1;
+}
+
+
 
 /******************* (C) COPYRIGHT 2010 STMicroelectronics *****END OF FILE****/
 

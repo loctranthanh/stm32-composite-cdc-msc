@@ -71,6 +71,7 @@ const uint8_t MASS_ConfigDescriptor[MASS_SIZ_CONFIG_DESC] =
 			0x40,   /*Maximum packet size (64 bytes) */
 			0x00,
 			0x00,     /*Polling interval in milliseconds*/
+						// IAD
 			0x08, /* bLength */
 			0x0B, /* bDescriptorType */
 			0x1, /* bFirstInterface */
@@ -79,6 +80,7 @@ const uint8_t MASS_ConfigDescriptor[MASS_SIZ_CONFIG_DESC] =
 			0x02, /* bFunctionSubClass */
 			0x01, /* bFunctionProtocol */
 			0x00, /* iFunction (Index of string descriptor describing this function) */
+						// CDC
 			0x09,   /* bLength: Interface Descriptor size */
 			USB_INTERFACE_DESCRIPTOR_TYPE,  /* bDescriptorType: Interface */
 			0x00,   /* bInterfaceNumber: Number of Interface */
@@ -107,6 +109,7 @@ const uint8_t MASS_ConfigDescriptor[MASS_SIZ_CONFIG_DESC] =
 			0x06,   /* bDescriptorSubtype: Union func desc */
 			0x00,   /* bMasterInterface: Communication class interface */
 			0x01,   /* bSlaveInterface0: Data Class Interface */
+					// Interface desc
 			0x07,   /* bLength: Endpoint Descriptor size */
 			USB_ENDPOINT_DESCRIPTOR_TYPE,   /* bDescriptorType: Endpoint */
 			0x82,   /* bEndpointAddress: (IN2) */
@@ -114,6 +117,7 @@ const uint8_t MASS_ConfigDescriptor[MASS_SIZ_CONFIG_DESC] =
 			VIRTUAL_COM_PORT_INT_SIZE,      /* wMaxPacketSize: */
 			0x00,
 			0xFF,   /* bInterval: */
+					// Endpoint desc
 			0x09,   /* bLength: Endpoint Descriptor size */
 			USB_INTERFACE_DESCRIPTOR_TYPE,  /* bDescriptorType: */
 			0x01,   /* bInterfaceNumber: Number of Interface */
@@ -132,7 +136,7 @@ const uint8_t MASS_ConfigDescriptor[MASS_SIZ_CONFIG_DESC] =
 			0x00,   /* bInterval: ignore for Bulk transfer */
 			0x07,   /* bLength: Endpoint Descriptor size */
 			USB_ENDPOINT_DESCRIPTOR_TYPE,   /* bDescriptorType: Endpoint */
-			0x81,   /* bEndpointAddress: (IN1) */
+			0x83,   /* bEndpointAddress: (IN1) */
 			0x02,   /* bmAttributes: Bulk */
 			VIRTUAL_COM_PORT_DATA_SIZE,             /* wMaxPacketSize: */
 			0x00,
