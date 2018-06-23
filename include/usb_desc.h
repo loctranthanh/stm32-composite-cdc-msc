@@ -34,12 +34,15 @@
 #define CUSTOMHID_OFF_HID_DESC                  0x12
 
 #define Composite_SIZ_DEVICE_DESC               18
-#define Composite_SIZ_CONFIG_DESC               64
+#define Composite_SIZ_CONFIG_DESC               98
 #define CUSTOMHID_SIZ_REPORT_DESC               143
 #define Composite_SIZ_STRING_LANGID             4
 #define Composite_SIZ_STRING_VENDOR             38
 #define Composite_SIZ_STRING_PRODUCT            48
 #define Composite_SIZ_STRING_SERIAL             26
+
+#define VIRTUAL_COM_PORT_INT_SIZE               8
+#define VIRTUAL_COM_PORT_DATA_SIZE              64
 
 #define MASS_SIZ_DEVICE_DESC              18
 #define MASS_SIZ_CONFIG_DESC              98
