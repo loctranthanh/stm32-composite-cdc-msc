@@ -55,24 +55,36 @@ uint32_t Receive_length;
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-
-void EP1_IN_Callback (void)
+void EP2_IN_Callback(void)
 {
-  packet_sent = 1;
+  Mass_Storage_In();
 }
 
 /*******************************************************************************
-* Function Name  : EP3_OUT_Callback
-* Description    :
+* Function Name  : EP2_OUT_Callback.
+* Description    : EP2 OUT Callback Routine.
 * Input          : None.
 * Output         : None.
 * Return         : None.
 *******************************************************************************/
-void EP3_OUT_Callback(void)
+void EP2_OUT_Callback(void)
 {
-  packet_receive = 1;
-  Receive_length = GetEPRxCount(ENDP3);
-  PMAToUserBufferCopy((unsigned char*)Receive_Buffer, ENDP3_RXADDR, Receive_length);
+  Mass_Storage_Out();
 }
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+void EP3_OUT_Callback(void)
+{
+	packet_receive = 1;
+	Receive_length = GetEPRxCount(ENDP3);
+	PMAToUserBufferCopy((unsigned char*)Receive_Buffer, ENDP3_RXADDR, Receive_length);
+}
+
+//void EP2_IN_Callback(void)
+//{
+//	SetEPTxValid(ENDP2);
+//}
+
+void EP1_IN_Callback(void)
+{
+	packet_sent = 1;
+}

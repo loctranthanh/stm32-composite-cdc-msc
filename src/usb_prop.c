@@ -33,12 +33,14 @@
 #include "usb_desc.h"
 #include "usb_pwr.h"
 #include "hw_config.h"
+#include "usb_bot.h"
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 uint8_t Request = 0;
+u32 Max_Lun = 0;
 
 LINE_CODING linecoding =
   {
@@ -107,6 +109,9 @@ ONE_DESCRIPTOR String_Descriptor[4] =
     {(uint8_t*)Virtual_Com_Port_StringSerial, VIRTUAL_COM_PORT_SIZ_STRING_SERIAL}
   };
 
+extern unsigned char Bot_State;
+extern Bulk_Only_CBW CBW;
+
 /* Extern variables ----------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 /* Extern function prototypes ------------------------------------------------*/
@@ -166,23 +171,45 @@ void Virtual_Com_Port_Reset(void)
   SetEPRxValid(ENDP0);
 
   /* Initialize Endpoint 1 */
-  SetEPType(ENDP1, EP_BULK);
-  SetEPTxAddr(ENDP1, ENDP1_TXADDR);
-  SetEPTxStatus(ENDP1, EP_TX_NAK);
-  SetEPRxStatus(ENDP1, EP_RX_DIS);
+  SetEPType(ENDP0, EP_CONTROL);
+  SetEPTxStatus(ENDP0, EP_TX_NAK);
+  SetEPRxAddr(ENDP0, ENDP0_RXADDR);
+  SetEPRxCount(ENDP0, Device_Property.MaxPacketSize);
+  SetEPTxAddr(ENDP0, ENDP0_TXADDR);
+  Clear_Status_Out(ENDP0);
+  SetEPRxValid(ENDP0);
+
+  /* Initialize Endpoint 1 */
+  SetEPType(ENDP2, EP_BULK);
+  SetEPTxAddr(ENDP2, ENDP2_TXADDR);
+  SetEPTxStatus(ENDP2, EP_TX_NAK);
+  SetEPRxStatus(ENDP2, EP_RX_DIS);
 
   /* Initialize Endpoint 2 */
-  SetEPType(ENDP4, EP_INTERRUPT);
-  SetEPTxAddr(ENDP4, ENDP4_TXADDR);
-  SetEPRxStatus(ENDP4, EP_RX_DIS);
-  SetEPTxStatus(ENDP4, EP_TX_NAK);
+  SetEPType(ENDP2, EP_BULK);
+  SetEPRxAddr(ENDP2, ENDP2_RXADDR);
+  SetEPRxCount(ENDP2, Device_Property.MaxPacketSize);
+  SetEPRxStatus(ENDP2, EP_RX_VALID);
+  SetEPTxStatus(ENDP2, EP_TX_DIS);
 
-  /* Initialize Endpoint 3 */
-  SetEPType(ENDP3, EP_BULK);
-  SetEPRxAddr(ENDP3, ENDP3_RXADDR);
-  SetEPRxCount(ENDP3, VIRTUAL_COM_PORT_DATA_SIZE);
-  SetEPRxStatus(ENDP3, EP_RX_VALID);
-  SetEPTxStatus(ENDP3, EP_TX_DIS);
+  /* Initialize Endpoint 1 */
+    SetEPType(ENDP1, EP_BULK);
+    SetEPTxAddr(ENDP1, ENDP1_TXADDR);
+    SetEPTxStatus(ENDP1, EP_TX_NAK);
+    SetEPRxStatus(ENDP1, EP_RX_DIS);
+//
+    /* Initialize Endpoint 2 */
+    SetEPType(ENDP4, EP_INTERRUPT);
+    SetEPTxAddr(ENDP4, ENDP4_TXADDR);
+    SetEPRxStatus(ENDP4, EP_RX_DIS);
+    SetEPTxStatus(ENDP4, EP_TX_NAK);
+//
+//    /* Initialize Endpoint 3 */
+    SetEPType(ENDP3, EP_BULK);
+    SetEPRxAddr(ENDP3, ENDP3_RXADDR);
+    SetEPRxCount(ENDP3, VIRTUAL_COM_PORT_DATA_SIZE);
+    SetEPRxStatus(ENDP3, EP_RX_VALID);
+    SetEPTxStatus(ENDP3, EP_TX_DIS);
 
   /* Set this device to response on default address */
   SetDeviceAddress(0);
