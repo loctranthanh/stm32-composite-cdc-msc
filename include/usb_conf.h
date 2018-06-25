@@ -53,20 +53,24 @@
 
 /* EP0  */
 /* rx/tx buffer base address */
-#define ENDP0_RXADDR        (0x18)
-#define ENDP0_TXADDR        (0x58)
+#define ENDP0_RXADDR        (0x40)	// 64
+#define ENDP0_TXADDR        (0x80)	// 64
 
 /* EP1  */
+
+#define ENDP1_TXADDR				(0xC0)  // 64
+
 /* tx buffer base address */
-#define ENDP2_TXADDR        (0x98)
+#define ENDP2_TXADDR        (0x100)	// 64
 
 /* EP2  */
 /* Rx buffer base address */
-#define ENDP2_RXADDR        (0xD8)
-#define ENDP4_TXADDR				(0x118)  // 16
+#define ENDP2_RXADDR        (0x140) // 64
 
-#define ENDP3_RXADDR				(0x128)
-#define ENDP1_TXADDR				(0x168)  // 64
+#define ENDP3_RXADDR				(0x180)	//
+
+#define ENDP4_TXADDR				(0x1C0)  // 16
+
 
 
 /*-------------------------------------------------------------*/
