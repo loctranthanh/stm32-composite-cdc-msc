@@ -10,6 +10,10 @@ uint8_t Send_Buffer[64];
 uint32_t packet_sent=1;
 uint32_t packet_receive=1;
 
+//volatile char RX_FLAG_END_LINE = 0;
+//volatile char RXi;
+//volatile char RXc;
+//volatile char RX_BUF[RX_BUF_SIZE] = {'\0'};
 
 void SetSysClockTo72(void)
 {
@@ -89,7 +93,8 @@ int main(void)
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(GPIOC, &GPIO_InitStructure);
   GPIO_SetBits(GPIOC, GPIO_Pin_13);
-
+  usart_init();
+	USARTSend(" Hello.\r\nUSART1 is ready.\r\n");
   while (1)
   {
     if (bDeviceState == CONFIGURED)
@@ -109,6 +114,7 @@ int main(void)
     	  // Echo
     	  if (packet_sent == 1) {
     		  CDC_Send_DATA ((uint8_t*)Receive_Buffer,Receive_length);
+    		  USARTSend(Receive_Buffer);
     	  }
 
     	  Receive_length = 0;
