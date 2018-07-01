@@ -77,6 +77,7 @@ void EP3_OUT_Callback(void)
 	packet_receive = 1;
 	Receive_length = GetEPRxCount(ENDP3);
 	PMAToUserBufferCopy((unsigned char*)Receive_Buffer, ENDP3_RXADDR, Receive_length);
+	USB_To_USART_Send_Data((uint8_t*)Receive_Buffer,Receive_length);
 }
 
 //void EP2_IN_Callback(void)

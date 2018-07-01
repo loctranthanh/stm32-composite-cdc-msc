@@ -43,6 +43,8 @@
 #define LED_ON                0xF0
 #define LED_OFF               0xFF
 
+#define RX_BUF_SIZE 64
+
 /* Exported functions ------------------------------------------------------- */
 void Set_System(void);
 void Set_USBClock(void);
@@ -54,6 +56,7 @@ void Get_SerialNum(void);
 void LCD_Control(void);
 uint32_t CDC_Send_DATA (uint8_t *ptrBuffer, uint8_t Send_length);
 uint32_t CDC_Receive_DATA(void);
+void USB_To_USART_Send_Data(uint8_t* data_buffer, uint8_t Nb_bytes);
 /* External variables --------------------------------------------------------*/
 
 #endif  /*__HW_CONFIG_H*/

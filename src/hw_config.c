@@ -376,4 +376,16 @@ uint32_t CDC_Receive_DATA(void)
   return 1 ;
 }
 
+void USB_To_USART_Send_Data(uint8_t* data_buffer, uint8_t Nb_bytes)
+{
+  uint32_t i;
+
+  for (i = 0; i < Nb_bytes; i++)
+  {
+    USART_SendData(USART1, *(data_buffer + i));
+    while(USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
+  }
+//  packet_receive = 0;
+}
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
