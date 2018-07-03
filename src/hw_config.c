@@ -138,6 +138,7 @@ void Set_System(void)
   EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure); 
+  MAL_Init(0);
 }
 
 /*******************************************************************************
